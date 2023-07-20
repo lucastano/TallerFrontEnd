@@ -1,8 +1,7 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+
 import './App.css'
-import CuerpoLogin from './components/CuerpoLogin';
+import Usuario from './components/Usuario';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
@@ -11,7 +10,7 @@ const App=()=> {
 
   return (
     <div>
-     <CuerpoLogin></CuerpoLogin>
+    <Usuario></Usuario>
     </div>
     
       
