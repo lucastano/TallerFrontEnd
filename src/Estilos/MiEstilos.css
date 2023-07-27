@@ -1,6 +1,27 @@
+
+
 .estilos{
-    background-color:rgb(245, 242, 242 );
-    padding: 50px;
-    padding-top: 10px;
-    border-radius: 15px;
-  };
+  background-color:rgb(245, 242, 242 );
+  padding: 50px;
+  padding-top: 10px;
+  border-radius: 15px;
+};
+
+.menu{
+  background-color:red;
+}
+  
+  .navbar{
+    background-color:yellow;
+  }
+
+ .col{
+  padding: 15px;
+ }
+ .table{
+  padding: 15px;
+ }
+
+ .container{
+  margin-top:30px
+ }

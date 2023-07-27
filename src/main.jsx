@@ -2,9 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
-import container from 'react-bootstrap/Container'
-import row from 'react-bootstrap/Row'
-import col from 'react-bootstrap/Col'
+import './Estilos/MiEstilos.css'
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
