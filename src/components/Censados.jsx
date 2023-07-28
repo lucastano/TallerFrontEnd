@@ -1,9 +1,14 @@
 import React from 'react'
 import Table from 'react-bootstrap/Table';
 import '../Estilos/MiEstilos.css'
+import { useDispatch,useSelector } from 'react-redux';
+import { Button } from 'react-bootstrap';
 
 
 function Censados() {
+
+ const datos=useSelector((state)=>state.listaCensados);
+ 
    const lista=[
     {id:1,nombre:"nombre1",departamento:1},
     {id:2,nombre:"nombre2",departamento:2},
@@ -19,7 +24,7 @@ function Censados() {
         <tr>
           <th>Id</th>
           <th>Nombre</th>
-          <th>Departamento</th>
+          <th>Fecha de Nacimiento</th>
           <th>Acciones</th>
           
         </tr>
@@ -27,11 +32,12 @@ function Censados() {
       <tbody>
        
           {
-            lista.map( (item,index)=>
+            datos.map( (item,index)=>
             <tr key={index}> 
             <td>{item.id}</td>
             <td>{item.nombre}</td>
-            <td>{item.departamento}</td>
+            <td>{item.fechaNacimiento}</td>
+            <td><Button variant="danger">Eliminar</Button></td>
 
             </tr>
               )

@@ -4,14 +4,20 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
 import { Col, Row } from 'react-bootstrap';
+import { useDispatch,useSelector } from 'react-redux';
+
 
 function NuevoCenso() {
     const [nombre, setNombre] = useState('')
-    const [departamento, setDepartamento] = useState('')
+    const [departamento, setDepartamento] = useState(0)
     const [ciudad, setCiudad] = useState('')
     const [nacimiento, setNacimiento] = useState('')
     const [ocupacion, setOcupacion] = useState('')
-    
+    const [mayor,setMayor]=useState(false);
+
+    const datosDepartamentos=useSelector((state)=>state.listaDepartamentos);
+    const datosOcupaciones=useSelector((state)=>state.listaOcupaciones);
+    const ocupacionMenores=[{id: 5, ocupacion: "Estudiante"}];
     
     
 
@@ -21,6 +27,7 @@ function NuevoCenso() {
     }
     const handleChangeDepartamento=(e)=>{
         setDepartamento(e.target.value);
+        console.log(e.target.value);
 
     }
     const handleChangeCiudad=(e)=>{
@@ -29,9 +36,31 @@ function NuevoCenso() {
     }
     const handleChangeFNacimiento=(e)=>{
        setNacimiento(e.target.value)
+       let fechaActual=new Date();
+      
+       let fechaNacimiento= new Date(e.target.value);
+      let edad=fechaActual.getFullYear()-fechaNacimiento.getFullYear();
+       
+      const mesActual = fechaActual.getMonth();
+      const mesNacimiento = fechaNacimiento.getMonth();
+      const diaActual = fechaActual.getDate();
+      const diaNacimiento = fechaNacimiento.getDate();
+    
+      if (mesActual < mesNacimiento || (mesActual === mesNacimiento && diaActual < diaNacimiento)) {
+        edad--;
+      }
+       
+      if(edad<=18){
+        setMayor(true)
+
+      }else{
+        setMayor(false)
+      }
+      
 
     }
     const handleChangeOcupacion=(e)=>{
+      
         setOcupacion(e.target.value)
 
     }
@@ -66,10 +95,13 @@ function NuevoCenso() {
       <Form.Group>
       <Form.Label  className="text-left">Departamento</Form.Label>
     <Form.Select aria-label="Default select example" onChange={handleChangeDepartamento}> 
-      <option>seleccione departamento...</option>
-      <option value="1">One</option>
-      <option value="2">Two</option>
-      <option value="3">Three</option>
+     <option>seleccione departamento...</option>
+     {
+      datosDepartamentos.map((item,index)=>
+       <option key={index} value={item.id_pais}>{item.nombre}</option>
+      )
+     }
+      
     </Form.Select>
       </Form.Group>
 
@@ -89,10 +121,13 @@ function NuevoCenso() {
     <Form.Group>
     <Form.Label  className="text-left">Ocupacion</Form.Label>
     <Form.Select aria-label="Default select example" onChange={handleChangeOcupacion}> 
-      <option>seleccione ocupacion...</option>
-      <option value="1">One</option>
-      <option value="2">Two</option>
-      <option value="3">Three</option>
+    <option>seleccione ciudad...</option>
+    {
+      mayor?ocupacionMenores.map(item=><option key={item.id} value={item.id}>{item.ocupacion}</option>)
+      :datosOcupaciones.map(item=><option key={item.id} value={item.id}>{item.ocupacion}</option>)
+    }
+      
+
     </Form.Select>
     </Form.Group>
       
