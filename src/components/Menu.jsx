@@ -18,7 +18,7 @@ function Menu() {
   return (
     <Navbar bg="dark" data-bs-theme="dark">
         <Container fluid>
-          <Navbar.Brand >AplicACION</Navbar.Brand>
+          <Navbar.Brand >App</Navbar.Brand>
           <Nav className="me-auto">
           <NavLink key="Log Out" to="/logout" style={({isActive})=>(isActive?{color:"red", marginRight: '20px'}:{color: "white", marginRight: '20px'})}>LogOut</NavLink>
            {

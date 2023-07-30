@@ -1,17 +1,27 @@
 import React from 'react'
 import '../Estilos/MiEstilos.css'
-import { useState} from 'react'
+import { useState,useEffect} from 'react'
 import { inicio } from '../Servicios/Services'
 import { useNavigate,NavLink,Navigate } from 'react-router-dom'
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Card from 'react-bootstrap/Card';
-import { Col, Row } from 'react-bootstrap'
+import { Col, Container, Row } from 'react-bootstrap'
 
 function Login({inicioSesion}) {
 const [username, setUserName] = useState("")
 const [password, setPassword] = useState("")
 const navigate=useNavigate();
+
+useEffect(() => {
+  const token=localStorage.getItem('apiKey');
+  if(token){
+     console.log("existe usuario logeado");
+     navigate("/");
+  }
+
+  
+}, [])
 
   const handleClick= async (e)=>{
     e.preventDefault();
@@ -45,36 +55,19 @@ const navigate=useNavigate();
     
 
   }
+  const handleClickRegistro=(e)=>{
+    e.preventDefault();
+    navigate("/registro");
+
+  }
 
   return (
     
-  //   <div className="container estilos">
-  //   <div className="row justify-content-center mt-5 " >
-  //     <div className="col-lx-12 ">
-  //       <h2 className="text-center mb-4">Iniciar sesión</h2>
-  //       <form>
-  //     <div className="mb-3">
-  //       <label htmlFor="usuario" className="form-label">Usuario</label>
-  //       <input type="text" className="form-control" name="txtUsuario" value={username}  onChange={handleChangeUser}  placeholder="Ingrese su Usuario" required />
-  //     </div>
-  //     <div className="mb-3">
-  //       <label htmlFor="password" className="form-label">Contraseña</label>
-  //       <input type="password" className="form-control" name="txtPassword" value={password} onChange={handleChangePassword}  placeholder="Ingrese su contraseña" required  />
-  //     </div>
-  //     <div className="text-center">
-  //       <button type="submit" className="btn btn-primary" onClick={handleClick} >Iniciar sesión</button>
-  //     </div>
-  //   </form>
-  //     </div>
-  //   </div>
-  // </div>
-  <>
-  <Row>
+  
+  <Container>
+     <Row className="row justify-content-center align-items-center">
     <Col xs={10}>
-    <Card style={{ width: '18rem' }}>
-  <Card.Img variant="top" src="holder.js/100px180" />
-  <Card.Body>
-    <Card.Title>LOGIN</Card.Title>
+   
    <Form>
   <Form.Group className="mb-3" controlId="formBasicEmail">
     <Form.Label>Usuario</Form.Label>
@@ -89,17 +82,21 @@ const navigate=useNavigate();
   <Button variant="primary" type="submit" onClick={handleClick}>
     Iniciar
   </Button>
+  <Button variant="secondary" type="submit" onClick={handleClickRegistro}>
+    Registrarme
+  </Button>
  
 </Form>
     
-  </Card.Body>
-</Card>
+  
     </Col>
   </Row>
+  </Container>
+ 
  
 
   
-</>
+
   )
 }
 

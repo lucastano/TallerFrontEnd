@@ -9,6 +9,7 @@ import DatosUsuario from './components/DatosUsuario';
 import Logout from './components/Logout';
 import Censados from './components/Censados';
 import NuevoCenso from './components/NuevoCenso';
+import Registro from './components/Registro';
 
 
 const App=()=> {
@@ -20,6 +21,7 @@ const App=()=> {
     <BrowserRouter>
     <Routes>
     <Route path="/login" element={<Login />}></Route>
+    <Route path="/registro" element={<Registro />}></Route>
 
     <Route path="/" element={<Dashboard />}> 
 

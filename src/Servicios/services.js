@@ -1,6 +1,21 @@
 const url='https://censo.develotion.com/'
 
 
+export const registro=(object)=>{
+ console.log(object);
+  return fetch(`${url}usuarios.php`, {
+       method: 'POST',
+       body: JSON.stringify(object) ,
+       headers: {
+         'Content-type': 'application/json;',
+       },
+     })
+       .then((response)=>response.json())
+       .then((json)=>{
+         return json;
+       })
+}
+
 export const inicio=(object)=>{
  
    return fetch(`${url}login.php`, {
@@ -37,7 +52,21 @@ export const obtenerCensadosService=(token,id)=>{
 }
 
 export const obtenerDepartamentos=(token,id)=>{
-  return fetch(`${url}/departamentos.php`,{
+  return fetch(`${url}departamentos.php`,{
+    method:'GET',
+    headers:{
+      'Content-type': 'application/json;',
+      'apikey':token,
+      'iduser':id,
+
+
+    }
+  })
+  .then((response)=>response.json())
+  .then((json)=>{return json;})
+}
+export const obtenerCiudades=(token,id,idDepartamento)=>{
+  return fetch(`${url}ciudades.php?idDepartamento=${idDepartamento}`,{
     method:'GET',
     headers:{
       'Content-type': 'application/json;',
