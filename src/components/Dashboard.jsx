@@ -5,15 +5,21 @@ import { useNavigate, NavLink, Navigate } from "react-router-dom";
 import Menu from './Menu'
 import { Outlet } from 'react-router-dom'
 import { useSelector,useDispatch } from 'react-redux';
-import { obtenerCensadosService,obtenerDepartamentos,obtenerOcupaciones } from '../Servicios/Services'
+import { obtenerCensadosService,obtenerCiudades,obtenerDepartamentos,obtenerOcupaciones } from '../Servicios/Services'
 import { cargaInicialCensados} from '../redux/features/censadosSlice';
 import { cargaInicialDepartamentos } from '../redux/features/departamentosSlice';
 import { cargaInicialOcupaciones } from '../redux/features/ocupacionesSlice';
+import { cargaInicialCiudades } from '../redux/features/ciudadesSlice';
+
+
 
 
 
 function Dashboard() {
 const [usuarioLogeado, setUsuarioLogeado] = useState(undefined);
+
+
+
 const navigate = useNavigate();
 const dispatch=useDispatch();
 
@@ -28,33 +34,86 @@ const dispatch=useDispatch();
       navigate("/login");
     }
     else{
-      obtenerCensados(token,userId);
-      departamentos(token,userId);
-      ocupaciones(token,userId);
+      obtenerDatos(token,userId);
+      
+      
     }
 
   }, [])
-  
-  const obtenerCensados=async(token,id)=>{
+
  
+  
+  const obtenerDatos=async(token,id)=>{
+    //obtengo los fetch
     const censados=await obtenerCensadosService(token,id);
-    const {personas}=censados;
+    const objDepartamentos=await obtenerDepartamentos(token,id);
+    const objOcupaciones=await obtenerOcupaciones(token,id);
     
-    dispatch(cargaInicialCensados(personas));
+
+    //destructuring
+    const {personas}=censados;
+    const {departamentos}=objDepartamentos;
+    const {ocupaciones}=objOcupaciones;
+    
+
+    //obtengo todas las ciudades de todos los departamentos
+    
+    const obtenerCiudadesPromises = departamentos.map((d) => {
+      return obtenerCiudades(token, id, d.id);
+    });
+  
+    const ciudadesObj = await Promise.all(obtenerCiudadesPromises);
    
+    const [,  ...lista] = ciudadesObj.map((obj) => obj.ciudades);
+    const todasLasCiudades = lista.flatMap((obj) => obj);
+    
+
+
+
+   //modifico el objeto para que le agrege el nombre de departamento y ocupacion
+
+
+    // const nuevo = personas.map((persona) => ({
+    //   ...persona,
+    //   idDepartamento:persona.departamento,
+    //   idOcupacion:persona.ocupacion,
+    //   idCiudad:persona.ciudad,
+    //   ocupacion: ocupaciones.find(o=>o.id==persona.ocupacion).ocupacion,
+    //   departamento: departamentos.find(d=>d.id==persona.departamento).nombre,
+    //    ciudad:todasLasCiudades.find(c=>c.id==persona.ciudad).nombre
+    // }));
+    dispatch(cargaInicialOcupaciones(ocupaciones));
+    dispatch(cargaInicialDepartamentos(departamentos));
+    dispatch(cargaInicialCensados(personas));
+    dispatch(cargaInicialCiudades(todasLasCiudades));
+    
+
+    
+
   }
 
-  const departamentos=async(token,id)=>{
-    const retorno=await obtenerDepartamentos(token,id);
-    const {departamentos}=retorno;
-    dispatch(cargaInicialDepartamentos(departamentos));
-  }
-  const ocupaciones=async(token,id)=>{
-    const retorno=await obtenerOcupaciones(token,id);
-    console.log("ocupaciones",retorno);
-    const {ocupaciones}=retorno;
-    dispatch(cargaInicialOcupaciones(ocupaciones));
-  }
+  
+
+  // const obtenerCensados=async(token,id)=>{
+ 
+  //   const censados=await obtenerCensadosService(token,id);
+  //   const {personas}=censados;
+    
+  //   dispatch(cargaInicialCensados(personas));
+   
+  // }
+
+  // const departamentos=async(token,id)=>{
+  //   const retorno=await obtenerDepartamentos(token,id);
+  //   const {departamentos}=retorno;
+  //   dispatch(cargaInicialDepartamentos(departamentos));
+    
+  // }
+  // const ocupaciones=async(token,id)=>{
+  //   const retorno=await obtenerOcupaciones(token,id);
+  //   const {ocupaciones}=retorno;
+  //   dispatch(cargaInicialOcupaciones(ocupaciones));
+  // }
   
 
 

@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+
 const initialState = [];//estado inicial lista vacia
 const censadosSlice = createSlice({
  name: "censadosSlice",
@@ -12,14 +13,15 @@ cargaInicialCensados: (state,accion) => {
 
  return listaCensados;
  },
- agregarCensado:(state,accion) => {
+ agregarCensado:(state,accion)  => {
+   console.log('accion.payload', accion.payload)
  const censado=accion.payload;
  return [...state,censado]; 
  },
  borrarCensado:(state,accion) => {
 
     const id=accion.payload;
-    const nuevaLista=state.filter(c=>c.id==id);
+    const nuevaLista=state.filter(c=>c.id!=id);
     return nuevaLista; 
 
  },

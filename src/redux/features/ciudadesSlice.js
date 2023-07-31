@@ -7,7 +7,7 @@ const ciudadesSlice = createSlice({
  reset: state => initialState,
   //devuelve estado inicial
  cargaInicialCiudades: (state,accion) => {
-    console.log('en redux',accion.payload);
+    
  const listaCiudades=accion.payload;
  
  return listaCiudades;

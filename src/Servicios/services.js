@@ -66,6 +66,7 @@ export const obtenerDepartamentos=(token,id)=>{
   .then((json)=>{return json;})
 }
 export const obtenerCiudades=(token,id,idDepartamento)=>{
+  
   return fetch(`${url}ciudades.php?idDepartamento=${idDepartamento}`,{
     method:'GET',
     headers:{

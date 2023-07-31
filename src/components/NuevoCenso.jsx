@@ -1,10 +1,14 @@
-import React, { useState } from 'react'
-
+import React, { useState,useEffect } from 'react'
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
 import { Col, Row } from 'react-bootstrap';
 import { useDispatch,useSelector } from 'react-redux';
+import { obtenerCiudades } from '../Servicios/Services'
+import { useNavigate, NavLink, Navigate } from "react-router-dom";
+import { cargaInicialCiudades } from '../redux/features/ciudadesSlice';
+import { agregarCensado } from '../redux/features/censadosSlice';
+
 
 
 function NuevoCenso() {
@@ -14,10 +18,33 @@ function NuevoCenso() {
     const [nacimiento, setNacimiento] = useState('')
     const [ocupacion, setOcupacion] = useState('')
     const [mayor,setMayor]=useState(false);
+    const [ciudadesDelDepartamento, setCiudadesDelDepartamento] = useState([])
 
+    //usestate de usuario logeado
+    const [nombreUsuario, setNombreUsuario] = useState("")
+    const [userId, setUserId] = useState(0)
+    const [token, setToken] = useState("")
+
+    //useselectors
     const datosDepartamentos=useSelector((state)=>state.listaDepartamentos);
     const datosOcupaciones=useSelector((state)=>state.listaOcupaciones);
+    const datosCiudades=useSelector((state)=>state.listaCiudades);
     const ocupacionMenores=[{id: 5, ocupacion: "Estudiante"}];
+
+    //dispatch
+    const dispatch=useDispatch();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+
+      const token=localStorage.getItem('apiKey');
+      const userId=localStorage.getItem('id');
+      const nombre=localStorage.getItem('nombre');
+      setToken(token);
+      setNombreUsuario(nombre);
+      setUserId(userId);
+
+    }, [])
     
     
 
@@ -25,13 +52,19 @@ function NuevoCenso() {
        setNombre(e.target.value);
 
     }
-    const handleChangeDepartamento=(e)=>{
+    const handleChangeDepartamento= async (e)=>{
+      const idDepartamento=e.target.value;
         setDepartamento(e.target.value);
-        console.log(e.target.value);
+       console.log("ciudades en nuevocenso",datosCiudades)
+       console.log("departamentos en nuevocenso",datosDepartamentos)
+      const ciudades=datosCiudades.filter(c=>c.idDepartamento==idDepartamento);
+       setCiudadesDelDepartamento(ciudades);
+        
 
     }
     const handleChangeCiudad=(e)=>{
         setCiudad(e.target.value);
+        
 
     }
     const handleChangeFNacimiento=(e)=>{
@@ -77,7 +110,9 @@ function NuevoCenso() {
 
         };
 
-        console.log("persona por censar",censado);
+        console.log('censado', censado)
+        dispatch(agregarCensado(censado));
+        navigate("/censados");
 
     }
 
@@ -98,7 +133,7 @@ function NuevoCenso() {
      <option>seleccione departamento...</option>
      {
       datosDepartamentos.map((item,index)=>
-       <option key={index} value={item.id_pais}>{item.nombre}</option>
+       <option key={index} value={item.id}>{item.nombre}</option>
       )
      }
       
@@ -108,10 +143,13 @@ function NuevoCenso() {
     <Form.Group>
     <Form.Label  className="text-left">Ciudad</Form.Label>
     <Form.Select aria-label="Default select example" onChange={handleChangeCiudad}> 
-      <option>seleccione ciudad...</option>
-      <option value="1">One</option>
-      <option value="2">Two</option>
-      <option value="3">Three</option>
+    <option>seleccione ciudad...</option>
+      {
+        ciudadesDelDepartamento.map(c=> <option key={c.id} value={c.id}>{c.nombre}</option>)
+      }
+
+      
+      
     </Form.Select>
     </Form.Group>
     <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -121,7 +159,7 @@ function NuevoCenso() {
     <Form.Group>
     <Form.Label  className="text-left">Ocupacion</Form.Label>
     <Form.Select aria-label="Default select example" onChange={handleChangeOcupacion}> 
-    <option>seleccione ciudad...</option>
+    <option>seleccione ocupacion...</option>
     {
       mayor?ocupacionMenores.map(item=><option key={item.id} value={item.id}>{item.ocupacion}</option>)
       :datosOcupaciones.map(item=><option key={item.id} value={item.id}>{item.ocupacion}</option>)

@@ -7,7 +7,7 @@ const departamentosSlice = createSlice({
  reset: state => initialState,
   //devuelve estado inicial
  cargaInicialDepartamentos: (state,accion) => {
-    console.log('en redux',accion.payload);
+
  const listaDepartamentos=accion.payload;
  
  return listaDepartamentos;

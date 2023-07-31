@@ -13,7 +13,7 @@ function Menu() {
         {path:"/nuevo",title:"Censar Persona"}
     ]
 
-    console.log(itemsMenu)
+  
 
   return (
     <Navbar bg="dark" data-bs-theme="dark">
