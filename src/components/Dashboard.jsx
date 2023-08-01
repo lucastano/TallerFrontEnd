@@ -5,7 +5,7 @@ import { useNavigate, NavLink, Navigate } from "react-router-dom";
 import Menu from './Menu'
 import { Outlet } from 'react-router-dom'
 import { useSelector,useDispatch } from 'react-redux';
-import { obtenerCensadosService,obtenerCiudades,obtenerDepartamentos,obtenerOcupaciones } from '../Servicios/Services'
+import { obtenerCensadosService,obtenerCiudades,obtenerDepartamentos,obtenerOcupaciones,obtenerTotalCensados } from '../Servicios/Services'
 import { cargaInicialCensados} from '../redux/features/censadosSlice';
 import { cargaInicialDepartamentos } from '../redux/features/departamentosSlice';
 import { cargaInicialOcupaciones } from '../redux/features/ocupacionesSlice';
@@ -48,6 +48,9 @@ const dispatch=useDispatch();
     const censados=await obtenerCensadosService(token,id);
     const objDepartamentos=await obtenerDepartamentos(token,id);
     const objOcupaciones=await obtenerOcupaciones(token,id);
+    //es el total de censados en el sistema(no de cada usuario);
+    const objTotalCensados=await obtenerTotalCensados(token,id);
+   
     
 
     //destructuring
@@ -66,22 +69,7 @@ const dispatch=useDispatch();
    
     const [,  ...lista] = ciudadesObj.map((obj) => obj.ciudades);
     const todasLasCiudades = lista.flatMap((obj) => obj);
-    
 
-
-
-   //modifico el objeto para que le agrege el nombre de departamento y ocupacion
-
-
-    // const nuevo = personas.map((persona) => ({
-    //   ...persona,
-    //   idDepartamento:persona.departamento,
-    //   idOcupacion:persona.ocupacion,
-    //   idCiudad:persona.ciudad,
-    //   ocupacion: ocupaciones.find(o=>o.id==persona.ocupacion).ocupacion,
-    //   departamento: departamentos.find(d=>d.id==persona.departamento).nombre,
-    //    ciudad:todasLasCiudades.find(c=>c.id==persona.ciudad).nombre
-    // }));
     dispatch(cargaInicialOcupaciones(ocupaciones));
     dispatch(cargaInicialDepartamentos(departamentos));
     dispatch(cargaInicialCensados(personas));

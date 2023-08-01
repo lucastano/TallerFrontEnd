@@ -26,19 +26,28 @@ function Login({ inicioSesion }) {
 
     //aca tenemos quie llamar al services
     const usuario = { usuario: username, password: password };
-    console.log(usuario);
-    const respuesta = await inicio(usuario);
-    console.log(respuesta);
-    //falta controlar lo que nos devuelve el login api , pero por el momento
-    // para avanzar no lo controlamos
-    if (respuesta.codigo == 200) {
-      toast.success("Bienvenido " + usuario.usuario);
+    
+    try{
+      const respuesta = await inicio(usuario);
       let localStorage = window.localStorage;
       localStorage.setItem("apiKey", respuesta.apiKey);
       localStorage.setItem("nombre", username);
       localStorage.setItem("id", respuesta.id);
+      toast.success("Bienvenido " + usuario.usuario);
+      navigate("/");
+
+    }catch(error){
+      
+     console.log('error', error)
+      //ver como dejar mejor este mensaje de error 
+      toast.error(error.message);
+      
+
     }
-    navigate("/");
+   
+       
+    
+    
   };
   const handleChangeUser = (e) => {
     const nombreusuario = e.target.value;
@@ -54,11 +63,11 @@ function Login({ inicioSesion }) {
   };
 
   return (
-    <Container>
-      <Row className="row justify-content-center align-items-center">
-        <Col xs={10}>
-          <Form>
-            <Form.Group className="mb-3" controlId="formBasicEmail">
+    <Container className="container-login">
+      <Row>
+        <Col xs={12}>
+          <Form className="custom-form">
+            <Form.Group className="mb-3"  controlId="formBasicEmail">
               <Form.Label className="label-blanco">Usuario</Form.Label>
               <Form.Control type="text" placeholder="Ingrese usuario" onChange={handleChangeUser}/>
             </Form.Group>

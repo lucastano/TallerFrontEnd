@@ -27,8 +27,30 @@ export const inicio=(object)=>{
       })
         .then((response)=>response.json())
         .then((json)=>{
-          return json;
+         console.log("aca entro")
+          if(json.codigo!=200){
+            console.log('entro aca')
+            return Promise.reject(json)
+          }else{
+
+             return json;
+          }
+         
         })
+        .catch( 
+          (error)=>{
+           
+            if(error.codigo==409){
+              throw new Error(error.message?error.message:"Credenciales invalidas");
+            }
+            if(error.message=='Failed to fetch'){
+              
+              throw new Error("hubo un error!");
+            }
+            
+          }
+
+        );
 }
 
 
@@ -112,6 +134,40 @@ console.log("objeto en services",object)
        .then((json)=>{
          return json;
        })
+}
+
+
+export const obtenerTotalCensados=(token,id)=>{
+  return fetch(`${url}/totalCensados.php`,{
+    method:'GET',
+    headers:{
+      'Content-type': 'application/json;',
+      'apikey':token,
+      'iduser':id,
+
+
+    }
+  })
+  .then((response)=>response.json())
+  .then((json)=>{return json;})
+}
+
+export const eliminarCensado=(apikey,iduser,idCenso)=>{
+  console.log('apikey', apikey)
+  console.log('iduser', iduser)
+  console.log('idCenso', idCenso)
+  return fetch(`${url}/personas.php?idCenso=${idCenso}`,{
+    method:'DELETE',
+    headers:{
+      'Content-type': 'application/json;',
+      'apikey':apikey,
+      'iduser':iduser,
+
+
+    }
+  })
+  .then((response)=>response.json())
+  .then((json)=>{return json;})
 }
 
 

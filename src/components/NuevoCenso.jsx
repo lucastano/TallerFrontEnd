@@ -8,6 +8,7 @@ import { obtenerCiudades,nuevoCenso } from '../Servicios/Services'
 import { useNavigate, NavLink, Navigate } from "react-router-dom";
 import { cargaInicialCiudades } from '../redux/features/ciudadesSlice';
 import { agregarCensado } from '../redux/features/censadosSlice';
+import '../Estilos/MiEstilos.css'
 
 
 
@@ -32,6 +33,7 @@ function NuevoCenso() {
     const datosCiudades=useSelector((state)=>state.listaCiudades);
     const ocupacionMenores=[{id: 5, ocupacion: "Estudiante"}];
 
+    // console.log("departamentos",datosdepartamentos);
     
     //dispatch
     const dispatch=useDispatch();
@@ -57,8 +59,7 @@ function NuevoCenso() {
     const handleChangeDepartamento= async (e)=>{
       const idDepartamento=e.target.value;
         setDepartamento(e.target.value);
-       console.log("ciudades en nuevocenso",datosCiudades)
-       console.log("departamentos en nuevocenso",datosDepartamentos)
+       
       const ciudades=datosCiudades.filter(c=>c.idDepartamento==idDepartamento);
        setCiudadesDelDepartamento(ciudades);
         
@@ -126,7 +127,15 @@ function NuevoCenso() {
     const apikey=localStorage.getItem('apiKey');
     const iduser=localStorage.getItem('id');
     const respuesta= await nuevoCenso(censado,apikey,iduser);
-    console.log("respuesta de agregar censo",respuesta);
+    
+    // controlar la respuesta de nuevocenso idCenso
+    console.log('censado antes', censado)
+    censado.id=respuesta.idCenso;
+    console.log('censado despues', censado)
+     dispatch(agregarCensado(censado));
+
+
+    
 
     }
 
@@ -134,9 +143,9 @@ function NuevoCenso() {
   return (
 
     <Container >
-        <Row>
+        <Row >
             <Col xs={12}>
-            <Form>
+            <Form  >
       <Form.Group className="mb-3" controlId="formBasicEmail">
         <Form.Label  className="text-left label-blanco">Nombre</Form.Label>
         <Form.Control type="text" placeholder="Ingrese Nombre" onChange={handleChangeNombre} />
