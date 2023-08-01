@@ -4,7 +4,7 @@ import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
 import { Col, Row } from 'react-bootstrap';
 import { useDispatch,useSelector } from 'react-redux';
-import { obtenerCiudades } from '../Servicios/Services'
+import { obtenerCiudades,nuevoCenso } from '../Servicios/Services'
 import { useNavigate, NavLink, Navigate } from "react-router-dom";
 import { cargaInicialCiudades } from '../redux/features/ciudadesSlice';
 import { agregarCensado } from '../redux/features/censadosSlice';
@@ -20,6 +20,7 @@ function NuevoCenso() {
     const [mayor,setMayor]=useState(false);
     const [ciudadesDelDepartamento, setCiudadesDelDepartamento] = useState([])
 
+    
     //usestate de usuario logeado
     const [nombreUsuario, setNombreUsuario] = useState("")
     const [userId, setUserId] = useState(0)
@@ -31,6 +32,7 @@ function NuevoCenso() {
     const datosCiudades=useSelector((state)=>state.listaCiudades);
     const ocupacionMenores=[{id: 5, ocupacion: "Estudiante"}];
 
+    
     //dispatch
     const dispatch=useDispatch();
     const navigate = useNavigate();
@@ -110,9 +112,21 @@ function NuevoCenso() {
 
         };
 
-        console.log('censado', censado)
-        dispatch(agregarCensado(censado));
+        
+        //  dispatch(agregarCensado(censado));
+        
+        
+        agregar(censado);
         navigate("/censados");
+
+    }
+
+    const agregar= async(censado)=>{
+
+    const apikey=localStorage.getItem('apiKey');
+    const iduser=localStorage.getItem('id');
+    const respuesta= await nuevoCenso(censado,apikey,iduser);
+    console.log("respuesta de agregar censo",respuesta);
 
     }
 

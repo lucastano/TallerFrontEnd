@@ -96,5 +96,23 @@ export const obtenerOcupaciones=(token,id)=>{
   .then((json)=>{return json;})
 }
 
+export const nuevoCenso=(object,apikey,iduser)=>{
+ 
+console.log("objeto en services",object)
+  return fetch(`${url}personas.php`, {
+       method: 'POST',
+       body: JSON.stringify(object) ,
+       headers: {
+         'Content-type': 'application/json;',
+         'apikey':apikey,
+         'iduser':iduser
+       },
+     })
+       .then((response)=>response.json())
+       .then((json)=>{
+         return json;
+       })
+}
+
 
 
