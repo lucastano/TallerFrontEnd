@@ -124,11 +124,11 @@ function NuevoCenso() {
             <Col xs={12}>
             <Form>
       <Form.Group className="mb-3" controlId="formBasicEmail">
-        <Form.Label  className="text-left">Nombre</Form.Label>
+        <Form.Label  className="text-left label-blanco">Nombre</Form.Label>
         <Form.Control type="text" placeholder="Ingrese Nombre" onChange={handleChangeNombre} />
       </Form.Group>
       <Form.Group>
-      <Form.Label  className="text-left">Departamento</Form.Label>
+      <Form.Label  className="text-left label-blanco">Departamento</Form.Label>
     <Form.Select aria-label="Default select example" onChange={handleChangeDepartamento}> 
      <option>seleccione departamento...</option>
      {
@@ -141,7 +141,7 @@ function NuevoCenso() {
       </Form.Group>
 
     <Form.Group>
-    <Form.Label  className="text-left">Ciudad</Form.Label>
+    <Form.Label  className="text-left label-blanco">Ciudad</Form.Label>
     <Form.Select aria-label="Default select example" onChange={handleChangeCiudad}> 
     <option>seleccione ciudad...</option>
       {
@@ -153,11 +153,11 @@ function NuevoCenso() {
     </Form.Select>
     </Form.Group>
     <Form.Group className="mb-3" controlId="formBasicEmail">
-        <Form.Label  className="text-left">Fecha de nacimiento</Form.Label>
+        <Form.Label  className="text-left label-blanco">Fecha de nacimiento</Form.Label>
         <Form.Control type="Date" placeholder="Ingrese fecha de nacimiento" onChange={handleChangeFNacimiento}/>
       </Form.Group>
     <Form.Group>
-    <Form.Label  className="text-left">Ocupacion</Form.Label>
+    <Form.Label  className="text-left label-blanco">Ocupacion</Form.Label>
     <Form.Select aria-label="Default select example" onChange={handleChangeOcupacion}> 
     <option>seleccione ocupacion...</option>
     {

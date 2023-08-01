@@ -4,7 +4,8 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import { registro } from '../Servicios/Services'
-import { useNavigate,NavLink,Navigate } from 'react-router-dom'
+import { useNavigate,NavLink,Navigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 
 
@@ -17,7 +18,7 @@ function Registro() {
    useEffect(() => {
      const token=localStorage.getItem('apiKey');
      if(token){
-        console.log("existe usuario logeado");
+        toast.error("Existe usuario logeado.");
         navigate("/");
      }
    
@@ -45,35 +46,37 @@ function Registro() {
     }
 
     const registrarse= async(user)=>{
-        const resultado = await registro(user);
-        console.log(resultado);
-        //codigo , apiKey,id
-        if(resultado.codigo==200){
-          let localStorage=window.localStorage;
-             localStorage.setItem('apiKey',resultado.apiKey);
-             localStorage.setItem('nombre',username);
-             localStorage.setItem('id',resultado.id);
-             navigate("/");
-        }
-
+      const resultado = await registro(user);
+      console.log(resultado);
+      //codigo , apiKey,id
+      if(resultado.codigo==200){
+        let localStorage=window.localStorage;
+        localStorage.setItem('apiKey',resultado.apiKey);
+        localStorage.setItem('nombre',username);
+        localStorage.setItem('id',resultado.id);
+        navigate("/");
+        toast.success(resultado.mensaje);
+      } else{
+        toast.error(resultado.mensaje);
+      }
     }
 
 
   return (
     <>
     <Container>
-         <h1 style={{textAlign: 'center'}}>Registro</h1>
+         <h1 style={{textAlign: 'center'}} className="label-blanco">Registro</h1>
     <Row className="row justify-content-center align-items-center">
         <Col sm={12} md={8} lg={4} >
         <Form>
       <Form.Group className="mb-3" controlId="formBasicEmail">
-        <Form.Label>Usuario</Form.Label>
+        <Form.Label className="label-blanco">Usuario</Form.Label>
         <Form.Control type="text" onChange={handleChangeUser} placeholder="Ingrese nombre usuario" />
         
       </Form.Group>
 
       <Form.Group className="mb-3" controlId="formBasicPassword">
-        <Form.Label>Password</Form.Label>
+        <Form.Label className="label-blanco">Password</Form.Label>
         <Form.Control type="password" onChange={handleChangePassword} placeholder="Password" />
       </Form.Group>
       
@@ -83,8 +86,6 @@ function Registro() {
     </Form></Col>
     </Row>
     </Container>
-   
-   
     </>
   )
 }

@@ -4,6 +4,14 @@
   
 }
 
+html, body{
+  background-image: url('assets/imagenes/censoFondo.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  background-attachment: fixed;
+}
+
 .logo {
   height: 6em;
   padding: 1.5em;

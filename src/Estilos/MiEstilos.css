@@ -25,3 +25,12 @@
  .container{
   margin-top:30px
  }
+
+ .label-blanco{
+  color: white;
+ }
+
+ .head-table{
+  color: white;
+  background-color: black;
+ }
