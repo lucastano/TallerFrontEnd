@@ -15,7 +15,7 @@ function Censados() {
  const departamentos=useSelector((state)=>state.listaDepartamentos);
  const todasLasCiudades=useSelector((state)=>state.listaCiudades);
  
- console.log("datos antes",todasLasCiudades);
+ console.log("datos antes",datos);
 
 
 
