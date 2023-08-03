@@ -5,13 +5,18 @@ import { inicio } from "../Servicios/Services";
 import { useNavigate, NavLink, Navigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import { Col, Container, Row } from "react-bootstrap";
+import { Col, Container, Row, Spinner } from "react-bootstrap";
 import { toast } from 'react-toastify';
+import { modificarSpinner } from "../redux/features/spinner";
+import { useSelector ,useDispatch} from "react-redux";
+
 
 function Login({ inicioSesion }) {
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const spinner=useSelector(state=>state.spinner)
 
   useEffect(() => {
     const token = localStorage.getItem("apiKey");
@@ -23,7 +28,7 @@ function Login({ inicioSesion }) {
 
   const handleClick = async (e) => {
     e.preventDefault();
-
+     dispatch(modificarSpinner(true))
     //aca tenemos quie llamar al services
     const usuario = { usuario: username, password: password };
     
@@ -31,13 +36,15 @@ function Login({ inicioSesion }) {
       const respuesta = await inicio(usuario);
       let localStorage = window.localStorage;
       localStorage.setItem("apiKey", respuesta.apiKey);
+     
       localStorage.setItem("nombre", username);
       localStorage.setItem("id", respuesta.id);
       toast.success("Bienvenido " + usuario.usuario);
+      dispatch(modificarSpinner(false));
       navigate("/");
 
     }catch(error){
-      
+      dispatch(modificarSpinner(false));
      console.log('error', error)
       //ver como dejar mejor este mensaje de error 
       toast.error(error.message);
@@ -61,7 +68,8 @@ function Login({ inicioSesion }) {
     e.preventDefault();
     navigate("/registro");
   };
-
+  const isFormValid = username.trim() !== '' && password.trim() !== '';
+  console.log('isFormValid', isFormValid)
   return (
     <Container className="container-login">
       <Row>
@@ -77,14 +85,19 @@ function Login({ inicioSesion }) {
               <Form.Control type="password" placeholder="Password" onChange={handleChangePassword}/>
             </Form.Group>
             <div className="d-flex justify-content-center">
-              <Button variant="primary" type="submit" onClick={handleClick} className="m-2">
+              <Button  disabled={!isFormValid} variant="primary" type="submit" onClick={handleClick} className="m-2">
                 Iniciar
               </Button>
               <Button variant="secondary" type="submit" onClick={handleClickRegistro} className="m-2">
                 Registrarme
               </Button>
-            </div>
+            </div> 
+            <div className="d-flex justify-content-center mt-3">
+               {spinner &&  <Spinner animation="border" variant="primary"/>}
+              </div>
+            
           </Form>
+         
         </Col>
       </Row>
     </Container>

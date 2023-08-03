@@ -1,8 +1,9 @@
 import React, { useEffect,useState } from 'react'
 import Table from 'react-bootstrap/Table';
 import '../Estilos/MiEstilos.css'
+import { useNavigate, NavLink, Navigate } from "react-router-dom";
 import { useDispatch,useSelector, useStore } from 'react-redux';
-import { Button, Container, Row,Col } from 'react-bootstrap';
+import { Button, Container, Row,Col, Form } from 'react-bootstrap';
 import { borrarCensado } from '../redux/features/censadosSlice';
 import { eliminarCensado } from '../Servicios/Services';
 import { useObtenerNombreDepartamento,useObtenerNombreCiudad,useObtenerNombreOcupacion } from '../util/useObtenerDatos';
@@ -11,21 +12,31 @@ import { useObtenerNombreDepartamento,useObtenerNombreCiudad,useObtenerNombreOcu
 
 
 function Censados() {
-
+const navigate=useNavigate();
  const dispatch=useDispatch();
  const datos=useSelector((state)=>state.listaCensados);
  const ocupaciones=useSelector((state)=>state.listaOcupaciones);
  const departamentos=useSelector((state)=>state.listaDepartamentos);
  const todasLasCiudades=useSelector((state)=>state.listaCiudades);
+ const [filtro, setFiltro] = useState("")
+ const [datosFiltrados, setDatosFiltrados] = useState(datos)
  const obtenerDepartamento=useObtenerNombreDepartamento();
  const obtenerCiudad=useObtenerNombreCiudad();
  const obtenerOcupacion=useObtenerNombreOcupacion();
+ console.log('datos', datos)
+console.log('datosFiltrados', datosFiltrados)
 
+useEffect(() => {
+  if(filtro!=""){
+    const listaFiltrada=datos.filter(item=>item.ocupacion==filtro)
+    setDatosFiltrados(listaFiltrada)
+  }
+  
+}, [datos])
 
-
-console.log('datos', datos)
 
  const handleClikEliminar=(e)=>{
+  
   const id=e.target.value;
   eliminar(id)
   
@@ -33,32 +44,54 @@ console.log('datos', datos)
 
  const eliminar=async(idCenso)=>{
   const iduser=localStorage.getItem('id');
-  console.log('idUsuario', iduser)
   const apikey=localStorage.getItem('apiKey');
-  console.log('apikey', apikey)
   const respuesta=await eliminarCensado(apikey,iduser,idCenso);
-  console.log('respuesta', respuesta)
+  
   //ELIMINA BIEN , FALTA CONTROLAR RESPUESTA API PARA HACER EL DISPATCH
   dispatch(borrarCensado(idCenso))
 
  }
 
+ const handleSlcFiltro=(e)=>{
+  const valor=e.target.value;
+  setFiltro(valor)
+  console.log('valor', valor)
+   const listaFiltrada=datos.filter(item=>item.ocupacion==valor);
+   setDatosFiltrados(listaFiltrada);
+ }
+
+ 
 
 
- if (!datos || !ocupaciones || !departamentos) {
-  console.log("ACA ENTRO")
-  return <p>Cargando...</p>
-   // o cualquier indicador de carga que desees mostrar
-}
 
-//controlar cuando no hay datos !!!!
+
   return (
-    <>
     
-    <Container>
+    <Container >
+      <div className='censados-style'>
+      <Row >
+        <Col sm={10}>
+        <Form>
+          <Form.Group>
+          <Form.Label className='text-left'></Form.Label>
+            <Form.Select arial-label="Default select example" onChange={handleSlcFiltro} >
+              <option  value={""}>seleccione ocupacion...</option>
+              {
+                ocupaciones.map(item=><option key={item.id}  value={item.id}>{item.ocupacion}</option>)
+              }
+            </Form.Select>
+          </Form.Group>
+          
+        </Form>
+        </Col>
+        <Col >
+        <Button variant="success" onClick={()=>navigate("/nuevo")}>+</Button>{' '}
+        </Col>
+      </Row>
     <Row>
-      <Col md={12}>
-        <Table className="custom-table" striped bordered hover >
+      <Col none={12}>
+        <div className="table-responsive">
+        <Table className="custom-table-censados "  >
           <thead>
             <tr>
               <th>Nombre</th>
@@ -71,7 +104,8 @@ console.log('datos', datos)
           </thead>
           <tbody>
             {
-            datos ? (
+            filtro=="" ? (
+              
               datos.map((item) => (
                 <tr key={item.id}>
                   <td>{item.nombre}</td>
@@ -87,72 +121,39 @@ console.log('datos', datos)
                 </tr>
               ))
             ) : (
-              <tr>
-                <td colSpan="6">No hay datos</td>
-              </tr>
+              datosFiltrados.map((item) => (
+                <tr key={item.id}>
+                  <td>{item.nombre}</td>
+                  <td>{item.fechaNacimiento}</td>
+                  <td>{obtenerOcupacion(item.ocupacion)}</td>
+                  <td>{obtenerDepartamento(item.departamento)}</td>
+                  <td>{obtenerCiudad(item.ciudad)}</td>
+                  <td>
+                    <Button variant="danger" value={item.id} onClick={handleClikEliminar}>
+                      Eliminar
+                    </Button>
+                  </td>
+                </tr>
+              ))
+              
             )}
           </tbody>
         </Table>
+        </div>
       </Col>
     </Row>
-  </Container>
+    <Row>
+      <Col>
+      
+      </Col>
+    </Row>
+    </div>
+    </Container>
+
   
-  </>
+ 
   )
 }
 
 export default Censados
 
-{/* <Container>
-<Row >
-  <Col md={12}>
-  <Table  striped bordered hover>
-<thead>
-  <tr>
-    
-    <th>Nombre</th>
-    <th>Fecha de Nacimiento</th>
-    <th>Ocupacion</th>
-    <th>Departamento</th>
-    <th>Ciudad</th>
-    <th>Acciones</th>
-    
-  </tr>
-</thead>
-<tbody>
- 
-    {
-      datos?
-      datos.map( (item)=>
-      <tr key={item.id}> 
-      
-      <td >{item.nombre}</td>
-      <td >{item.fechaNacimiento}</td>
-      <td >{ocupaciones.find( o=>o.id==item.ocupacion).ocupacion }</td>
-      <td >{departamentos.find(d=>d.id==item.departamento).nombre}</td> 
-      <td >{todasLasCiudades.find(c=>c.id==item.ciudad).nombre}</td>
-      
-      <td><Button variant="danger" value={item.id} onClick={handleClikEliminar} >Eliminar</Button></td>
-
-      </tr>
-        )
-        :console.log("no hay datos")
-    }
-    
-   
-    
- 
- 
-</tbody>
-</Table>
-
-
-  </Col>
-</Row>
-</Container> */}
-
-// ----------------------------------------------------------------
-// <td>{item.fechaNacimiento}</td>
-//                   <td>{ocupaciones.find((o) => o.id === item.ocupacion).ocupacion}</td>
-//                   <td>{departamentos.find((d) => d.id === item.departamento).nombre}</td>
-//                   <td>{todasLasCiudades.find((c) => c.id === item.ciudad).nombre}</td>

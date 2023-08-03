@@ -57,6 +57,7 @@ const dispatch=useDispatch();
     const {personas}=censados;
     const {departamentos}=objDepartamentos;
     const {ocupaciones}=objOcupaciones;
+    console.log('departamentos', departamentos)
     
 
     //obtengo todas las ciudades de todos los departamentos
@@ -67,7 +68,7 @@ const dispatch=useDispatch();
   
     const ciudadesObj = await Promise.all(obtenerCiudadesPromises);
    
-    const [,  ...lista] = ciudadesObj.map((obj) => obj.ciudades);
+    const [, ...lista] = ciudadesObj.map((obj) => obj.ciudades);
     const todasLasCiudades = lista.flatMap((obj) => obj);
 
     dispatch(cargaInicialOcupaciones(ocupaciones));
@@ -80,35 +81,7 @@ const dispatch=useDispatch();
 
   }
 
-  
 
-  // const obtenerCensados=async(token,id)=>{
- 
-  //   const censados=await obtenerCensadosService(token,id);
-  //   const {personas}=censados;
-    
-  //   dispatch(cargaInicialCensados(personas));
-   
-  // }
-
-  // const departamentos=async(token,id)=>{
-  //   const retorno=await obtenerDepartamentos(token,id);
-  //   const {departamentos}=retorno;
-  //   dispatch(cargaInicialDepartamentos(departamentos));
-    
-  // }
-  // const ocupaciones=async(token,id)=>{
-  //   const retorno=await obtenerOcupaciones(token,id);
-  //   const {ocupaciones}=retorno;
-  //   dispatch(cargaInicialOcupaciones(ocupaciones));
-  // }
-  
-
-
-
-  
-  
-  
 
   return (
 

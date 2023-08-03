@@ -2,7 +2,7 @@
 
 .estilos{
   background-color:rgb(245, 242, 242 );
-  padding: 50px;
+  /* padding: 50px; */
   padding-top: 10px;
   border-radius: 15px;
 };
@@ -15,15 +15,22 @@
     background-color:yellow;
   }
 
- .col{
+ /* .col{
   padding: 15px;
- }
+ } */
  .table{
   padding: 15px;
  }
 
  .container{
-  margin-top:30px
+  margin-top:10px;
+  /* display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  padding: 0; */
+  
  }
 
  .label-blanco{
@@ -35,11 +42,11 @@
   background-color: black;
  }
 
- /* estilos para tabla censados */
+ 
  
 
 
-/* estilos para el formulario  */
+
 
 /* estilos login  */
 
@@ -90,4 +97,87 @@
 /* Espaciado entre los botones */
 .btn:not(:last-child) {
   margin-bottom: 10px;
+}
+
+
+/* estilos para formulario nuevo censo */
+.my-form {
+  max-width: 3000px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+/* estilos para censados */
+.censados-style {
+  max-width: 3000px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+/* Estilos personalizados para los campos del formulario */
+/* .my-form .form-group {
+  margin-bottom: 15px;
+}
+
+.my-form .form-label {
+  font-weight: bold;
+}
+
+.my-form .form-control {
+  border-radius: 5px;
+}
+
+.my-form .btn-primary {
+  width: 100%;
+} */
+
+
+/* 
+estilos para tabla censados  */
+.custom-table-censados {
+  width: 100%;
+  border-collapse: collapse;
+  
+
+  
+}
+
+.custom-table-censados th,
+.custom-table-censados td {
+  padding: 15px;
+  text-align: center;
+  border: 1px solid #ddd;
+}
+
+.custom-table-censados th {
+  background-color: #f5f5f5;
+  color: #333;
+  font-weight: bold;
+}
+
+.custom-table-censados tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.custom-table-censados tbody tr:hover {
+  background-color: #fafafa;
+}
+
+.custom-table-censados button {
+  padding: 6px 12px;
+  font-size: 14px;
+  border: none;
+  border-radius: 4px;
+  background-color: #dc3545;
+  color: #fff;
+  cursor: pointer;
+}
+
+.custom-table-censados button:hover {
+  background-color: #c82333;
 }
