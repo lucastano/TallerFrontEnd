@@ -3,6 +3,7 @@ import '../Estilos/MiEstilos.css'
 import { useEffect,useState } from 'react';
 import { useNavigate, NavLink, Navigate } from "react-router-dom";
 import Menu from './Menu'
+import Censados from './Censados'
 import { Outlet } from 'react-router-dom'
 import { useSelector,useDispatch } from 'react-redux';
 import { obtenerCensadosService,obtenerCiudades,obtenerDepartamentos,obtenerOcupaciones,obtenerTotalCensados } from '../Servicios/Services'
@@ -10,6 +11,8 @@ import { cargaInicialCensados} from '../redux/features/censadosSlice';
 import { cargaInicialDepartamentos } from '../redux/features/departamentosSlice';
 import { cargaInicialOcupaciones } from '../redux/features/ocupacionesSlice';
 import { cargaInicialCiudades } from '../redux/features/ciudadesSlice';
+import { cargaInicialTotalCensados } from '../redux/features/totalCensadosSlice';
+import { Container, Row,Col } from 'react-bootstrap';
 
 
 
@@ -57,7 +60,9 @@ const dispatch=useDispatch();
     const {personas}=censados;
     const {departamentos}=objDepartamentos;
     const {ocupaciones}=objOcupaciones;
-    console.log('departamentos', departamentos)
+    const{total}=objTotalCensados;
+    console.log('personas', personas)
+    console.log('totalPersonasCensadas', total)
     
 
     //obtengo todas las ciudades de todos los departamentos
@@ -75,6 +80,7 @@ const dispatch=useDispatch();
     dispatch(cargaInicialDepartamentos(departamentos));
     dispatch(cargaInicialCensados(personas));
     dispatch(cargaInicialCiudades(todasLasCiudades));
+    dispatch(cargaInicialTotalCensados(total));
     
 
     
@@ -87,7 +93,9 @@ const dispatch=useDispatch();
 
 <>
 <Menu></Menu>
+
 <Outlet></Outlet>
+
 </>
 
    

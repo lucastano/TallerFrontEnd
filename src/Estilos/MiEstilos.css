@@ -2,7 +2,7 @@
 
 .estilos{
   background-color:rgb(245, 242, 242 );
-  /* padding: 50px; */
+  
   padding-top: 10px;
   border-radius: 15px;
 };
@@ -15,9 +15,7 @@
     background-color:yellow;
   }
 
- /* .col{
-  padding: 15px;
- } */
+
  .table{
   padding: 15px;
  }
@@ -30,6 +28,7 @@
   height: 100vh;
   margin: 0;
   padding: 0; */
+  max-width: 2500px;
   
  }
 
@@ -51,6 +50,15 @@
 /* estilos login  */
 
 .container-login {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  
+  
+}
+.container-registro {
   height: 100vh;
   display: flex;
   justify-content: center;
@@ -84,6 +92,10 @@
    
    
 }
+/* tamanio de letra para todo el documento */
+body{
+  font-size:20px;
+}
 
 .form-control:focus {
   background-color: #ced4da; /* Color de fondo del campo de entrada en foco */
@@ -105,7 +117,7 @@
   max-width: 3000px;
   margin: 0 auto;
   padding: 20px;
-  border: 1px solid #ccc;
+  /* border: 1px solid #ccc; */
   border-radius: 5px;
   background-color: #f9f9f9;
 }
@@ -119,8 +131,9 @@
   background-color: #f9f9f9;
 }
 
+
 /* Estilos personalizados para los campos del formulario */
-/* .my-form .form-group {
+.my-form .form-group {
   margin-bottom: 15px;
 }
 
@@ -129,16 +142,50 @@
 }
 
 .my-form .form-control {
-  border-radius: 5px;
+  /* border-radius: 5px; */
 }
 
 .my-form .btn-primary {
   width: 100%;
-} */
+  margin-top:30px ;
+}
+
+.my-form{
+  max-height:1000px;
+}
 
 
 /* 
 estilos para tabla censados  */
+
+.fila-Censados{
+  display: flex;
+  justify-content: center; /* Centra horizontalmente */
+  align-items: center; /* Centra verticalmente */
+  
+  max-width: auto;
+  height: 100%;
+  
+}
+.form-select{
+  max-width: 100%;
+}
+
+.columna-Censados{
+  
+  justify-content: center; /* Centra horizontalmente */
+  align-items: center; /* Centra verticalmente */
+  
+  max-width: auto;
+  height: 85px;
+  
+ 
+
+}
+
+.table-censados{
+  margin-top:20px;
+}
 .custom-table-censados {
   width: 100%;
   border-collapse: collapse;
@@ -181,3 +228,36 @@ estilos para tabla censados  */
 .custom-table-censados button:hover {
   background-color: #c82333;
 }
+
+.miDiv {
+  /* Estilos para el div (opcional) */
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+
+.col-censados-metricas{
+  /*separamos contenedores entre si */
+  padding: 10px;
+}
+.col-censados-metricas {
+  /*separamos contenedores entre si */
+  padding: 10px;
+}
+.div-censados-metricas {
+  /*separamos contenedores entre si */
+  padding:5px;
+  margin-bottom: 15px;
+  
+}
+
+/* formulario dentro del todo en uno para agregar nuevo censo */
+.form-censados-metricas {
+  /*separamos contenedores entre si */
+  padding:5px;
+  padding-top: 1px;
+  margin:1px;
+  /* margin-bottom: 15px; */
+  
+}
+

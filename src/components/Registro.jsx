@@ -35,40 +35,47 @@ function Registro() {
         setPassword(e.target.value);
     }
 
-    const hancleClickRegistro=(e)=>{
+    const hancleClickRegistro= async(e)=>{
         e.preventDefault();
         const user={usuario:username, password:password}
-        registrarse(user);
+        try{
+          console.log('entro al try')
+
+           const resultado = await registro(user);
+           
+          
+           localStorage.setItem('apiKey',resultado.apiKey);
+           localStorage.setItem('nombre',username);
+           localStorage.setItem('id',resultado.id);
+           toast.success("Bienvenido "+user.usuario);
+           navigate("/");
+           
+
+        }
+        catch(error){
+          console.log('resultado', error)
+          toast.error(error.message);
+          
+
+        }
 
         
 
 
     }
 
-    const registrarse= async(user)=>{
-      const resultado = await registro(user);
-      console.log(resultado);
-      //codigo , apiKey,id
-      if(resultado.codigo==200){
-        let localStorage=window.localStorage;
-        localStorage.setItem('apiKey',resultado.apiKey);
-        localStorage.setItem('nombre',username);
-        localStorage.setItem('id',resultado.id);
-        navigate("/");
-        toast.success(resultado.mensaje);
-      } else{
-        toast.error(resultado.mensaje);
-      }
-    }
+    
 
-
+    const isFormValid = username.trim() !== '' && password.trim() !== '';
+    console.log('isFormValid', isFormValid)
   return (
     <>
-    <Container>
-         <h1 style={{textAlign: 'center'}} className="label-blanco">Registro</h1>
-    <Row className="row justify-content-center align-items-center">
-        <Col sm={12} md={8} lg={4} >
-        <Form>
+    <Container className="container-registro">
+        
+    <Row >
+        <Col sm={12}  >
+        <Form className="custom-form"> 
+        <h2 style={{textAlign: 'center'}} className="label-blanco">Registro</h2>
       <Form.Group className="mb-3" controlId="formBasicEmail">
         <Form.Label className="label-blanco">Usuario</Form.Label>
         <Form.Control type="text" onChange={handleChangeUser} placeholder="Ingrese nombre usuario" />
@@ -80,10 +87,16 @@ function Registro() {
         <Form.Control type="password" onChange={handleChangePassword} placeholder="Password" />
       </Form.Group>
       
-      <Button variant="primary" type="submit" onClick={hancleClickRegistro}>
+      <Button disabled={!isFormValid} variant="primary" type="submit" onClick={hancleClickRegistro}>
         Registrarse
       </Button>
-    </Form></Col>
+      <Button variant="danger" type="submit" onClick={()=> navigate("/login")}>
+        Cancelar
+      </Button>
+    </Form>
+    
+    </Col>
+    
     </Row>
     </Container>
     </>

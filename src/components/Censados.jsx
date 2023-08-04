@@ -14,7 +14,9 @@ import { useObtenerNombreDepartamento,useObtenerNombreCiudad,useObtenerNombreOcu
 function Censados() {
 const navigate=useNavigate();
  const dispatch=useDispatch();
+
  const datos=useSelector((state)=>state.listaCensados);
+
  const ocupaciones=useSelector((state)=>state.listaOcupaciones);
  const departamentos=useSelector((state)=>state.listaDepartamentos);
  const todasLasCiudades=useSelector((state)=>state.listaCiudades);
@@ -23,8 +25,7 @@ const navigate=useNavigate();
  const obtenerDepartamento=useObtenerNombreDepartamento();
  const obtenerCiudad=useObtenerNombreCiudad();
  const obtenerOcupacion=useObtenerNombreOcupacion();
- console.log('datos', datos)
-console.log('datosFiltrados', datosFiltrados)
+ 
 
 useEffect(() => {
   if(filtro!=""){
@@ -67,14 +68,16 @@ useEffect(() => {
 
   return (
     
-    <Container >
+    <Container>
       <div className='censados-style'>
-      <Row >
-        <Col sm={10}>
-        <Form>
+      <Row className='fila-Censados justify-content-center align-items-center' >
+        
+        <Col className='columna-Censados ' sm={10}>
+        <Form className='justify-content-center align-items-center' >
+          
           <Form.Group>
-          <Form.Label className='text-left'></Form.Label>
-            <Form.Select arial-label="Default select example" onChange={handleSlcFiltro} >
+          <Form.Label  className='text-left'></Form.Label>
+            <Form.Select  arial-label="Default select example" onChange={handleSlcFiltro} >
               <option  value={""}>seleccione ocupacion...</option>
               {
                 ocupaciones.map(item=><option key={item.id}  value={item.id}>{item.ocupacion}</option>)
@@ -85,12 +88,16 @@ useEffect(() => {
         </Form>
         </Col>
         <Col >
+        <Form.Group>
+        <Form.Label className='text-left'></Form.Label>
         <Button variant="success" onClick={()=>navigate("/nuevo")}>+</Button>{' '}
+        </Form.Group>
         </Col>
+        
       </Row>
     <Row>
       <Col none={12}>
-        <div className="table-responsive">
+        <div className="table-responsive table-censados">
         <Table className="custom-table-censados "  >
           <thead>
             <tr>
@@ -149,6 +156,7 @@ useEffect(() => {
     </Row>
     </div>
     </Container>
+    
 
   
  

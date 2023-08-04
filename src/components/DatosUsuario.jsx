@@ -1,4 +1,5 @@
 import React, { useState,useEffect } from 'react'
+import { Container,Col,Row } from 'react-bootstrap';
 import Card from 'react-bootstrap/Card';
 import { Outlet } from 'react-router-dom'
 
@@ -15,9 +16,10 @@ function DatosUsuario() {
   }, [])
   
   return (
-    <>
-  
-   <Card style={{ width: '18rem' }}>
+    <Container>
+      <Row>
+        <Col sm={12}>
+         <Card style={{ width: '18rem' }}>
       <Card.Img variant="top" src="holder.js/100px180" />
       <Card.Body>
         <Card.Title>Usuario</Card.Title>
@@ -27,8 +29,13 @@ function DatosUsuario() {
       
       </Card.Body>
     </Card> 
+        </Col>
+      </Row>
+    </Container>
+  
+  
     
-    </>
+    
   )
 }
 

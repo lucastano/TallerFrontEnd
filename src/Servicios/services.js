@@ -12,8 +12,30 @@ export const registro=(object)=>{
      })
        .then((response)=>response.json())
        .then((json)=>{
-         return json;
+        if(json.codigo!=200){
+          console.log('json', json)
+
+          return Promise.reject(json)
+
+        }
+        else
+        {
+          return json;
+        }
+         
        })
+       .catch(
+        (error)=>{
+          console.log('error', error)
+          if(error.codigo==409){
+            throw new Error(error.mensaje?error.mensaje:"Credenciales invalidas");
+          }
+          if(error.message=='Failed to fetch'){
+              
+            throw new Error("hubo un error!");
+          }
+        }
+       )
 }
 
 export const inicio=(object)=>{
@@ -27,9 +49,9 @@ export const inicio=(object)=>{
       })
         .then((response)=>response.json())
         .then((json)=>{
-         console.log("aca entro")
+         
           if(json.codigo!=200){
-            console.log('entro aca')
+            
             return Promise.reject(json)
           }else{
 

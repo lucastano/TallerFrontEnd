@@ -3,14 +3,18 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
 import InputGroup from 'react-bootstrap/InputGroup';
+
 import { Col, Row } from 'react-bootstrap';
 import { useDispatch,useSelector } from 'react-redux';
 import { obtenerCiudades,nuevoCenso } from '../Servicios/Services'
 import { useNavigate, NavLink, Navigate } from "react-router-dom";
 import { cargaInicialCiudades } from '../redux/features/ciudadesSlice';
 import { agregarCensado } from '../redux/features/censadosSlice';
+import { aumentarTotalCensados } from '../redux/features/totalCensadosSlice';
 import '../Estilos/MiEstilos.css'
 import { toast } from 'react-toastify';
+import { InputLabel, FormControl,Select, MenuItem} from '@mui/material';
+
 
 
 
@@ -23,6 +27,7 @@ function NuevoCenso() {
     const [mayor,setMayor]=useState(false);
     const [ciudadesDelDepartamento, setCiudadesDelDepartamento] = useState([])
     const [validated, setValidated] = useState(false)
+    
     
 
     
@@ -37,9 +42,9 @@ function NuevoCenso() {
     const datosCiudades=useSelector((state)=>state.listaCiudades);
     const ocupacionMenores=[{id: 5, ocupacion: "Estudiante"}];
 
-    console.log('datosCiudades', datosCiudades)
+    
 
-    // console.log("departamentos",datosdepartamentos);
+    
     
     //dispatch
     const dispatch=useDispatch();
@@ -60,6 +65,7 @@ function NuevoCenso() {
 
     const handleChangeNombre=(e)=>{
        setNombre(e.target.value);
+       
 
     }
     const handleChangeDepartamento= async (e)=>{
@@ -112,11 +118,10 @@ function NuevoCenso() {
       // e.preventDefault();
       let control=true;
         const form=e.currentTarget;
-        console.log('form', form)
-       
+
         if(form.checkValidity()===false){
           e.preventDefault();
-          console.log(form)
+          
           e.stopPropagation();
         control=false;
         toast.error("Tiene que completar todos los campos");
@@ -150,16 +155,17 @@ function NuevoCenso() {
 
     const agregar= async(censado)=>{
 
-      console.log('censado', censado)
+     
     const apikey=localStorage.getItem('apiKey');
     const iduser=localStorage.getItem('id');
     const respuesta= await nuevoCenso(censado,apikey,iduser);
-    console.log('respuesta', respuesta)
+
     // controlar la respuesta de nuevocenso idCenso
-    console.log('censado antes', censado)
+  
     censado.id=respuesta.idCenso;
-    console.log('censado despues', censado)
+   
     dispatch(agregarCensado(censado));
+    dispatch(aumentarTotalCensados());
 
     }
 
@@ -168,35 +174,37 @@ function NuevoCenso() {
     
   return (
 
-    <Container >
+    <Container>
         <Row >
             <Col xs={12}>
             <Form noValidate validated={validated} onSubmit={handleClick} className="my-form" >
 
-      <Form.Group className="mb-3" controlId="validationCustom01">
+            <Form.Group className="mb-3" controlId="validationCustom01">
 
-        <Form.Label  className="text-left label-blanco">Nombre</Form.Label>
-        <Form.Control type="text" placeholder="Ingrese Nombre" onChange={handleChangeNombre} required />
+            <Form.Label  className="text-left label-blanco">Nombre</Form.Label>
+            <Form.Control type="text" placeholder="Ingrese Nombre" onChange={handleChangeNombre} required />
         
 
-      </Form.Group>
+           </Form.Group>
+           <Form.Group controlId="validationCustom02">
 
-      <Form.Group controlId="validationCustom02">
+           <Form.Label  className="text-left label-blanco">Departamento</Form.Label>
+           <Form.Select as="select"  aria-label="Default select example" value={departamento} onChange={handleChangeDepartamento} required> 
+<option value={""}>seleccione departamento...</option>
+{
+datosDepartamentos.map((item,index)=>
+<option key={index} value={item.id}>{item.nombre}</option>
+)
+}
 
-      <Form.Label  className="text-left label-blanco">Departamento</Form.Label>
-    <Form.Select as="select"  aria-label="Default select example" value={departamento} onChange={handleChangeDepartamento} required> 
-     <option value={""}>seleccione departamento...</option>
-     {
-      datosDepartamentos.map((item,index)=>
-       <option key={index} value={item.id}>{item.nombre}</option>
-      )
-     }
-      
-    </Form.Select>
-    
-    
-    
-      </Form.Group>
+</Form.Select>
+
+
+
+</Form.Group> 
+
+           
+
 
     <Form.Group controlId="validationCustom03">
     <Form.Label  className="text-left label-blanco">Ciudad</Form.Label>
@@ -230,19 +238,32 @@ function NuevoCenso() {
     
     </Form.Group>
     
-   
-
-      <Button variant="primary" type="submit" >
+   <Form.Group>
+     <Button variant="primary" type="submit" >
         Guardar
       </Button>
+   </Form.Group>
+
+   
+     
     </Form>
 
             </Col>
         </Row>
+        
+       
+
+
+        </Container>
    
     
-    </Container>
+    
   )
 }
 
 export default NuevoCenso
+
+
+
+
+ 

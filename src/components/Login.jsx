@@ -29,7 +29,7 @@ function Login({ inicioSesion }) {
   const handleClick = async (e) => {
     e.preventDefault();
      dispatch(modificarSpinner(true))
-    //aca tenemos quie llamar al services
+    
     const usuario = { usuario: username, password: password };
     
     try{
@@ -45,7 +45,7 @@ function Login({ inicioSesion }) {
 
     }catch(error){
       dispatch(modificarSpinner(false));
-     console.log('error', error)
+     
       //ver como dejar mejor este mensaje de error 
       toast.error(error.message);
       
@@ -75,6 +75,7 @@ function Login({ inicioSesion }) {
       <Row>
         <Col xs={12}>
           <Form className="custom-form">
+            <h2>Inicio de sesión</h2>
             <Form.Group className="mb-3"  controlId="formBasicEmail">
               <Form.Label className="label-blanco">Usuario</Form.Label>
               <Form.Control type="text" placeholder="Ingrese usuario" onChange={handleChangeUser}/>

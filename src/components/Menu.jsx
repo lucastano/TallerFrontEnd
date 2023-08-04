@@ -1,5 +1,5 @@
 import React from 'react'
-import { Col, Row,Container } from 'react-bootstrap';
+import { Col, Row,Container, Carousel } from 'react-bootstrap';
 
 import  Nav  from 'react-bootstrap/Nav'
 import  Navbar  from 'react-bootstrap/Navbar'
@@ -20,7 +20,7 @@ function Menu() {
 
   return (
 
-    
+   
     <Row>
       <Col sm={12}>
       <Navbar bg="dark" data-bs-theme="dark" expand="lg">
@@ -64,9 +64,7 @@ function Menu() {
     </Navbar>
       </Col>
     </Row>
-   
-   
-    
+
   )
 }
 

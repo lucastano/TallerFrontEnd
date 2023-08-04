@@ -3,6 +3,7 @@ import censadosSlice from './features/censadosSlice'
 import departamentosSlice from './features/departamentosSlice'
 import ciudadesSlice from './features/ciudadesSlice'
 import ocupacionesSlice from './features/ocupacionesSlice'
+import totalCensadosSlice from './features/totalCensadosSlice'
 import spinnerSlice from './features/spinner'
 
 export const store = configureStore({
@@ -11,6 +12,7 @@ export const store = configureStore({
  listaDepartamentos:departamentosSlice,
  listaCiudades:ciudadesSlice,
  listaOcupaciones:ocupacionesSlice,
- spinner:spinnerSlice
+ spinner:spinnerSlice,
+ totalCensados:totalCensadosSlice
  },
 })
