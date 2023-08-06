@@ -77,9 +77,6 @@ export const inicio=(object)=>{
 
 
 export const obtenerCensadosService=(token,id)=>{
-
-
-
   return fetch(`${url}personas.php?idUsuario=${id}`, {
     method: 'GET',
     headers: {
@@ -103,7 +100,6 @@ export const obtenerDepartamentos=(token,id)=>{
       'apikey':token,
       'iduser':id,
 
-
     }
   })
   .then((response)=>response.json())
@@ -117,8 +113,6 @@ export const obtenerCiudades=(token,id,idDepartamento)=>{
       'Content-type': 'application/json;',
       'apikey':token,
       'iduser':id,
-
-
     }
   })
   .then((response)=>response.json())
@@ -132,8 +126,6 @@ export const obtenerOcupaciones=(token,id)=>{
       'Content-type': 'application/json;',
       'apikey':token,
       'iduser':id,
-
-
     }
   })
   .then((response)=>response.json())

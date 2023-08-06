@@ -81,10 +81,6 @@ const dispatch=useDispatch();
     dispatch(cargaInicialCensados(personas));
     dispatch(cargaInicialCiudades(todasLasCiudades));
     dispatch(cargaInicialTotalCensados(total));
-    
-
-    
-
   }
 
 
