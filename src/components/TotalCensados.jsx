@@ -1,14 +1,18 @@
 import React, { useState,useEffect } from 'react'
-import { Container, Row,Col, Image,Button ,Form} from 'react-bootstrap'
+import { Container, Row,Col, Image,Button } from 'react-bootstrap'
 import Table from 'react-bootstrap/Table';
 import { useDispatch,useSelector, useStore } from 'react-redux';
 import NuevoCenso from './NuevoCenso';
 import GraficaPersonasPorDepartamento from './graficas/GraficaPersonasPorDepartamento';
+import GraficaPersonasPorOcupacion from './graficas/GraficaPersonasPorOcupacion';
+import { useNavigate, NavLink, Navigate } from "react-router-dom";
+import MapaCensos from './MapaCensos';
 
 function TotalCensados() {
 
     const censados=useSelector((state)=>state.listaCensados);
     const departamentos=useSelector((state)=>state.listaDepartamentos);
+    const ocupaciones=useSelector((state)=>state.listaOcupaciones);
     const montevideo=departamentos.find(d=>d.nombre=='Montevideo');
     const censadosMontevideo=censados.filter(c=>c.departamento==montevideo.id);
     const interior=censados.filter(c=>c.departamento!=montevideo.id);
@@ -17,30 +21,37 @@ function TotalCensados() {
     //total de censados del sistema 
     const totalCensados=useSelector((state)=>state.totalCensados);
     const [porcentajeCensados, setPorcentajeCensados] = useState(0)
+    const navigate=useNavigate();
+
+    console.log('ocupaciones EN totalcensados', ocupaciones)
 
     useEffect(() => {
       if(censados==undefined){
 
       }else{
       const porcentaje=(censados.length*100)/totalCensados;
+      const numeroRedondeado=Number(porcentaje.toFixed(3));
 
-      setPorcentajeCensados(porcentaje);
+      setPorcentajeCensados(numeroRedondeado);
       }
+      
       
     }, [censados]);
 
     //GraficaPersonasPorDepartamento
-    const datosGraficaDepartamentos = departamentos.map(depto => {
-      const cantidadPersonas = censados.filter(c => c.departamento === depto.id).length;
-      return { departamentoNombre: depto.nombre, cantidadPersonas };
-    });
-    const personasCensadasPorDpto = datosGraficaDepartamentos.some(dato => dato.cantidadPersonas > 0);
+    // const datosGraficaDepartamentos = departamentos.map(depto => {
+    //   const cantidadPersonas = censados.filter(c => c.departamento === depto.id).length;
+    //   return { departamentoNombre: depto.nombre, cantidadPersonas };
+    // });
+    // const personasCensadasPorDpto = datosGraficaDepartamentos.some(dato => dato.cantidadPersonas > 0);
     
-    //Personas censadas por ocupacion
+    // Personas censadas por ocupacion
     // const datosGraficaOcupaciones = ocupaciones.map(ocupacion => {
     //   const cantidadPersonas = censados.filter(c => c.ocupacion === ocupacion.id).length;
-    //   return { ocupacionNombre: ocupacion.nombre, cantidadPersonas };
+    //   return { ocupacionNombre: ocupacion.ocupacion, cantidadPersonas };
     // });
+
+    // console.log('datosGraficaOcupaciones', datosGraficaOcupaciones)
     // const personasCensadasPorOcupacion = datosGraficaOcupaciones.some(dato => dato.cantidadPersonas > 0);
 
 
@@ -82,6 +93,33 @@ function TotalCensados() {
 
             <Col className='col-censados-metricas'  sm={12} lg={4}>
               <div style={{backgroundColor:'#F7F7F6 ',textAlign:'center'}}>
+                <div>
+                {censados ? (
+                <GraficaPersonasPorDepartamento/>
+              ) : (
+                  <p>No hay ninguna persona censada.</p>
+              )}
+                </div>
+              </div>
+            </Col>
+
+            <Col className='col-censados-metricas'  sm={12} lg={4}>
+              <div  style={{backgroundColor:'#F7F7F6 ',textAlign:'center'}}>
+                <div className='div-censados-metricas' >
+                  hola
+                {censados ? (
+                <GraficaPersonasPorOcupacion />
+              ) : (
+                  <p>No hay ninguna persona censada.</p>
+              )}
+                </div>
+              </div>
+            </Col>
+          </Row>
+
+          <Row >
+            <Col sm={12} lg={6}>
+            <div style={{backgroundColor:'#F7F7F6 ',textAlign:'center'}}>
                 <div>Procentaje
                   <div>
                     <h3>{porcentajeCensados?porcentajeCensados:0}%</h3>
@@ -90,34 +128,39 @@ function TotalCensados() {
                 </div>
               </div>
             </Col>
+            <Col    sm={12} lg={6}>
+              <div className='div-censados-metricas' style={{backgroundColor:'white'}}>
+                <div>
+                <MapaCensos></MapaCensos>
 
-            <Col className='col-censados-metricas'  sm={12} lg={4}>
-              <div className='div-censados-metricas' style={{backgroundColor:'#F7F7F6 ',textAlign:'center'}}>
-                <div className='form-censados-metricas'>
-                  <NuevoCenso></NuevoCenso>
                 </div>
               </div>
             </Col>
           </Row>
+          <Row>
 
-          <Row gx-4>
-            <Col  sm={12} lg={6}>
-              {personasCensadasPorDpto ? (
-                <GraficaPersonasPorDepartamento datos={datosGraficaDepartamentos} />
-              ) : (
-                  <p>No hay ninguna persona censada.</p>
-              )}
-            </Col>
-            <Col  sm={12} lg={6}>
-              {/* {personasCensadasPorOcupacion ? (
-                <GraficaPersonasPorOcupacion datos={datosGraficaOcupaciones} />
-              ) : (
-                  <p>No hay ninguna persona censada.</p>
-              )} */}
-            </Col>
+           <Col   sm={12} lg={6}>
+            <div style={{backgroundColor:'white'}} >
+              <div>
+              <Button onClick={()=>navigate("/nuevo")} variant="success">+ Agregar nuevo Censo</Button>{' '}
+              </div>
+            </div>
+           </Col>
+
+           <Col   sm={12} lg={6}>
+            <div style={{backgroundColor:'white'}} >
+              <div>
+              <Button onClick={()=>navigate("/censados")} variant="info">Ver mis Censados</Button>{' '}
+
+              </div>
+            </div>
+           </Col>
+           
+
           </Row>
         </Col>
       </Row>
+      
     </Container>
   )
 }
@@ -127,20 +170,3 @@ export default TotalCensados
 
 
 
-{/* <Form className='formulario-todoEnUno'>
-      <Form.Group   controlId="formBasicEmail">
-        <Form.Label>Nombre</Form.Label>
-        <Form.Control type="text" placeholder="Ingrese nombre" />
-      </Form.Group>
-
-      <Form.Group className="mb-3" controlId="formBasicPassword">
-        <Form.Label>Departamento</Form.Label>
-        <Form.Control type="password" placeholder="Password" />
-      </Form.Group>
-      <Form.Group className="mb-3" controlId="formBasicCheckbox">
-        <Form.Check type="checkbox" label="Check me out" />
-      </Form.Group>
-      <Button variant="primary" type="submit">
-        Submit
-      </Button>
-    </Form> */}

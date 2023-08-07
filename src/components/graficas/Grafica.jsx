@@ -37,7 +37,7 @@ function Grafica({ etiquetas, valores, nombreGrafica, nombreDatos }) {
             {
                 label: nombreDatos,
                 data: valores,
-                backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                backgroundColor: 'rgba(140, 6, 6, 0.5)',
             }
         ],
     };
