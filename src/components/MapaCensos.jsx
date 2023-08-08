@@ -23,7 +23,7 @@ function MapaCensos() {
             return marca
         }
     )
-    console.log('markersData', markersData)
+   
 
 
   return (

@@ -7,6 +7,7 @@ import { Button, Container, Row,Col, Form } from 'react-bootstrap';
 import { borrarCensado } from '../redux/features/censadosSlice';
 import { eliminarCensado } from '../Servicios/Services';
 import { useObtenerNombreDepartamento,useObtenerNombreCiudad,useObtenerNombreOcupacion } from '../util/useObtenerDatos';
+import { toast } from 'react-toastify';
 
 
 
@@ -48,7 +49,7 @@ useEffect(() => {
   const apikey=localStorage.getItem('apiKey');
   const respuesta=await eliminarCensado(apikey,iduser,idCenso);
   
-  //ELIMINA BIEN , FALTA CONTROLAR RESPUESTA API PARA HACER EL DISPATCH
+  toast.success("Se elimino correctamente");
   dispatch(borrarCensado(idCenso))
 
  }
@@ -56,7 +57,7 @@ useEffect(() => {
  const handleSlcFiltro=(e)=>{
   const valor=e.target.value;
   setFiltro(valor)
-  console.log('valor', valor)
+  
    const listaFiltrada=datos.filter(item=>item.ocupacion==valor);
    setDatosFiltrados(listaFiltrada);
  }
@@ -112,7 +113,10 @@ useEffect(() => {
           <tbody>
             {
             filtro=="" ? (
-              
+              datos.length==0?
+              <tr>
+              <td colSpan="6">No hay datos disponibles.</td>
+            </tr>:
               datos.map((item) => (
                 <tr key={item.id}>
                   <td>{item.nombre}</td>
@@ -128,7 +132,13 @@ useEffect(() => {
                 </tr>
               ))
             ) : (
+              datosFiltrados.length==0?
+                
+                <tr>
+                <td colSpan="6">No hay datos disponibles.</td>
+              </tr>:
               datosFiltrados.map((item) => (
+                
                 <tr key={item.id}>
                   <td>{item.nombre}</td>
                   <td>{item.fechaNacimiento}</td>

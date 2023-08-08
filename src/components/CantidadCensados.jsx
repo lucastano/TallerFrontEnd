@@ -12,15 +12,15 @@ function CantidadCensados() {
 
   return (
     <div  style={{textAlign:'center'}}>
-    <div className='div-censados-metricas'  style={{backgroundColor:'#F7F7F6',borderRadius:'9px'}}>censados totales
+    <div className='div-censados-metricas'  style={{backgroundColor:'#F7F7F6',borderRadius:'9px'}}><strong>Censados totales</strong>
       <div >{censados.length}</div>
     </div>
 
-    <div className='div-censados-metricas' style={{backgroundColor:'#F7F7F6',borderRadius:'9px'}}>censados Montevideo
+    <div className='div-censados-metricas' style={{backgroundColor:'#F7F7F6',borderRadius:'9px'}}><strong>Censados Montevideo</strong>
       <div className='div-censados-metricas'>{censadosMontevideo.length}</div>
     </div>
 
-    <div className='div-censados-metricas' style={{backgroundColor:'#F7F7F6 ',borderRadius:'9px'}}>censados interior
+    <div className='div-censados-metricas' style={{backgroundColor:'#F7F7F6 ',borderRadius:'9px'}}><strong>Censados interior</strong>
       <div className='div-censados-metricas' >{interior.length}</div>
     </div>
   </div>

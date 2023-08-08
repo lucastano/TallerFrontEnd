@@ -53,33 +53,20 @@ const dispatch=useDispatch();
     const objOcupaciones=await obtenerOcupaciones(token,id);
     //es el total de censados en el sistema(no de cada usuario);
     const objTotalCensados=await obtenerTotalCensados(token,id);
-   
+   const objCiudades=await obtenerCiudades(token,id);
     
 
     //destructuring
+    const {ciudades}=objCiudades;
     const {personas}=censados;
     const {departamentos}=objDepartamentos;
     const {ocupaciones}=objOcupaciones;
     const{total}=objTotalCensados;
-    console.log('personas', personas)
-    console.log('totalPersonasCensadas', total)
-    
-
-    //obtengo todas las ciudades de todos los departamentos
-    
-    const obtenerCiudadesPromises = departamentos.map((d) => {
-      return obtenerCiudades(token, id, d.id);
-    });
-  
-    const ciudadesObj = await Promise.all(obtenerCiudadesPromises);
-   
-    const [, ...lista] = ciudadesObj.map((obj) => obj.ciudades);
-    const todasLasCiudades = lista.flatMap((obj) => obj);
 
     dispatch(cargaInicialOcupaciones(ocupaciones));
     dispatch(cargaInicialDepartamentos(departamentos));
     dispatch(cargaInicialCensados(personas));
-    dispatch(cargaInicialCiudades(todasLasCiudades));
+    dispatch(cargaInicialCiudades(ciudades));
     dispatch(cargaInicialTotalCensados(total));
   }
 

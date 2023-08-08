@@ -25,7 +25,7 @@ function TotalCensados() {
     const [porcentajeCensados, setPorcentajeCensados] = useState(0)
     const navigate=useNavigate();
 
-    console.log('ocupaciones EN totalcensados', ocupaciones)
+    
 
     useEffect(() => {
       if(censados==undefined){
@@ -103,17 +103,17 @@ function TotalCensados() {
           <Row>
 
            <Col   sm={12} lg={6}>
-            <div style={{backgroundColor:'white'}} >
+            <div  >
               <div className='div-censados-metricas'>
-              <Button onClick={()=>navigate("/nuevo")} variant="success">+ Agregar nuevo Censo</Button>{' '}
+              <Button onClick={()=>navigate("/nuevo")} variant="primary">+ Agregar nuevo Censo</Button>{' '}
               </div>
             </div>
            </Col>
 
            <Col   sm={12} lg={6}>
-            <div style={{backgroundColor:'white'}} >
+            <div  >
               <div className='div-censados-metricas' >
-              <Button onClick={()=>navigate("/censados")} variant="info">Ver mis Censados</Button>{' '}
+              <Button onClick={()=>navigate("/censados")} variant="success">Ver mis Censados</Button>{' '}
 
               </div>
             </div>

@@ -1,7 +1,7 @@
 import React, { useState,useEffect } from 'react'
 import { useDispatch,useSelector, useStore } from 'react-redux';
 import '../Estilos/MiEstilos.css'
-import CuentaRegresiva from './CunetaRegresiva';
+import CuentaRegresiva from './CuentaRegresiva';
 
 function PorcentajeCensados() {
     const [porcentajeCensados,  setPorcentajeCensados,  ] = useState(0)

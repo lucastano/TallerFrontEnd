@@ -26,7 +26,7 @@ export const registro=(object)=>{
        })
        .catch(
         (error)=>{
-          console.log('error', error)
+         
           if(error.codigo==409){
             throw new Error(error.mensaje?error.mensaje:"Credenciales invalidas");
           }
@@ -105,9 +105,9 @@ export const obtenerDepartamentos=(token,id)=>{
   .then((response)=>response.json())
   .then((json)=>{return json;})
 }
-export const obtenerCiudades=(token,id,idDepartamento)=>{
+export const obtenerCiudades=(token,id)=>{
   
-  return fetch(`${url}ciudades.php?idDepartamento=${idDepartamento}`,{
+  return fetch(`${url}ciudades.php`,{
     method:'GET',
     headers:{
       'Content-type': 'application/json;',
@@ -167,9 +167,7 @@ export const obtenerTotalCensados=(token,id)=>{
 }
 
 export const eliminarCensado=(apikey,iduser,idCenso)=>{
-  console.log('apikey', apikey)
-  console.log('iduser', iduser)
-  console.log('idCenso', idCenso)
+ 
   return fetch(`${url}/personas.php?idCenso=${idCenso}`,{
     method:'DELETE',
     headers:{

@@ -71,9 +71,9 @@ function NuevoCenso() {
     const handleChangeDepartamento= async (e)=>{
       const idDepartamento=e.target.value;
         setDepartamento(e.target.value);
-       console.log('e.target.value', e.target.value)
+       
       const ciudades=datosCiudades.filter(c=>c.idDepartamento==idDepartamento);
-      console.log('ciudades', ciudades)
+      
        setCiudadesDelDepartamento(ciudades);
         
 
@@ -141,6 +141,7 @@ function NuevoCenso() {
         
    
          agregar(censado);
+         toast.success("se agrego correctamente");
          navigate("/censados");
 
         }
@@ -159,9 +160,6 @@ function NuevoCenso() {
     const apikey=localStorage.getItem('apiKey');
     const iduser=localStorage.getItem('id');
     const respuesta= await nuevoCenso(censado,apikey,iduser);
-
-    // controlar la respuesta de nuevocenso idCenso
-  
     censado.id=respuesta.idCenso;
    
     dispatch(agregarCensado(censado));
@@ -190,14 +188,14 @@ function NuevoCenso() {
 
            <Form.Label  className="text-left label-blanco">Departamento</Form.Label>
            <Form.Select as="select"  aria-label="Default select example" value={departamento} onChange={handleChangeDepartamento} required> 
-<option value={""}>seleccione departamento...</option>
-{
-datosDepartamentos.map((item,index)=>
-<option key={index} value={item.id}>{item.nombre}</option>
-)
-}
+            <option value={""}>seleccione departamento...</option>
+              {
+               datosDepartamentos.map((item,index)=>
+               <option key={index} value={item.id}>{item.nombre}</option>
+               )
+              }
 
-</Form.Select>
+               </Form.Select>
 
 
 

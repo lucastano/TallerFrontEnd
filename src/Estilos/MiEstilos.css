@@ -22,12 +22,7 @@
 
  .container{
   margin-top:10px;
-  /* display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  margin: 0;
-  padding: 0; */
+  
   max-width: 2500px;
   
  }
@@ -141,9 +136,7 @@ body{
   font-weight: bold;
 }
 
-.my-form .form-control {
-  /* border-radius: 5px; */
-}
+
 
 .my-form .btn-primary {
   width: 100%;
@@ -245,6 +238,12 @@ estilos para tabla censados  */
   padding: 10px;
 }
 .div-censados-metricas {
+  /*separamos contenedores entre si */
+  padding:5px;
+  margin-bottom: 15px;
+  
+}
+.button-censados-metricas {
   /*separamos contenedores entre si */
   padding:5px;
   margin-bottom: 15px;
