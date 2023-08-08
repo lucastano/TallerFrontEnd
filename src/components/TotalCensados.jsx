@@ -41,12 +41,6 @@ function TotalCensados() {
     }, [censados]);
 
 
-
-
-
-    
-
-    
   return (
     <Container style={{backgroundColor:'#ECEEEB', marginTop:"2%"}}>
       <Row style={{justifyContent: 'center'}} >
