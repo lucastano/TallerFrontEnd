@@ -10,18 +10,21 @@ function MapaCensos() {
     //mark tiene latitud, longitud ,titulo y contenido
     //latitud y longitud no estan en la lista de censos, esos datos lo tiene el departamento
     //contenido nos devuelve el total de censados para ese departamento
-   const markersData= censos.map(
-        censado=>{
+    //departamentos en lugar de censados
+
+   const markersData= departamentos.map(
+        departamento=>{
             const marca={
-                lat:departamentos.find(d=>d.id==censado.departamento).latitud,
-                lng:departamentos.find(d=>d.id==censado.departamento).longitud,
-                titulo:departamentos.find(d=>d.id==censado.departamento).nombre,
-                contenido:censos.filter(c=>c.departamento==censado.departamento).length
+                lat:departamento.latitud,
+                lng:departamento.longitud,
+                titulo:departamento.nombre,
+                contenido:censos.filter(c=>c.departamento==departamento.id).length
             }
             return marca
         }
     )
-console.log('markersData', markersData)
+    console.log('markersData', markersData)
+
 
   return (
     <Mapa markersData={markersData}  ></Mapa>

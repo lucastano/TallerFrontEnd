@@ -10,7 +10,7 @@ function Menu() {
 
     const itemsMenu=[
         
-        {path:"/usuario",title:"Mis Datos"},
+        
         {path:"/censados",title:"Mis Censados"},
         {path:"/nuevo",title:"Censar Persona"},
         {path:"/totalCensados",title:"Total censados"}
